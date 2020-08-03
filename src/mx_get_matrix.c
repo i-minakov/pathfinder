@@ -8,6 +8,15 @@ static int get_ind_of_isl(char *island, t_path *info) {
     return -1;
 }
 
+int *mx_malloc_mas(int len) {
+    int *mas = (int *)malloc(sizeof(int) * (len + 1));
+
+    mas[len] = -1;
+    for (int i = 0; i < len; i++)
+        mas[i] = 0;
+    return mas;
+}
+
 void mx_matrix_free(int ***mtrx, int len) {
     if (!mtrx || !*mtrx)
         return ;
@@ -19,7 +28,7 @@ void mx_matrix_free(int ***mtrx, int len) {
     *mtrx = NULL;
 }
 
-int **malloc_matrix(int len) {
+int **mx_malloc_matrix(int len) {
     int **mtrx = (int **)malloc(sizeof(int *) * (len + 1));
 
     mtrx[len] = NULL;
@@ -32,7 +41,7 @@ int **malloc_matrix(int len) {
 }
 
 int **mx_get_matrix(t_path *info) {
-    int **mtrx = malloc_matrix(info->count);
+    int **mtrx = mx_malloc_matrix(info->count);
     char **arr = mx_strsplit(info->str, '\n');
     char **m = NULL;
     char **p = NULL;

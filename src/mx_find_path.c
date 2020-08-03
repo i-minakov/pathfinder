@@ -1,7 +1,7 @@
 #include "../inc/pathfinder.h"
 
 static int **copy_matrix(int **mtrx, int len) {
-    int **mtrx_copy = malloc_matrix(len);
+    int **mtrx_copy = mx_malloc_matrix(len);
 
     for (int i = 0; i < len; i++) {
         for (int j = 0; j < len; j++) 
@@ -47,7 +47,7 @@ static char *start_finder(int **mtrx, t_path *info,
 void mx_find_path(t_path *info) {
     char *s = NULL;
     char *tmp = NULL;
-
+    char **res = NULL;
 
     for (int i = 0; i < info->count - 1; i++) {
         for (int j = i + 1; j < info->count; j++) {
@@ -56,7 +56,9 @@ void mx_find_path(t_path *info) {
             info->index_src = i;
             info->index_dst = j;
             s = start_finder(info->mtrx, info, i, tmp);
-            printf("%s\n", s);
+            res = mx_strsplit(s, '\n');
+            mx_result(res, info);
+            mx_del_strarr(&res);
             mx_strdel(&s);
             mx_strdel(&tmp);
         }

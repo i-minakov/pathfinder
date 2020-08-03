@@ -53,7 +53,7 @@ static t_path *create_struct() {
 }
 
 int main(int argc, char *c[]) {
-    t_path *info = (t_path *)malloc(sizeof(t_path));
+    t_path *info = create_struct();
     char **m = NULL;
     int err;
 
@@ -71,5 +71,9 @@ int main(int argc, char *c[]) {
     info->count = mx_len_of_array(info->isle);
     info->mtrx = mx_get_matrix(info);
     mx_find_path(info);
+    mx_del_strarr(&info->isle);
+    mx_strdel(&info->str);
+    mx_matrix_free(&info->mtrx, info->count);
+    free(info);
     return 0;
 }
